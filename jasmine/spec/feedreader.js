@@ -104,6 +104,7 @@ $(function() {
             });
            
          });
+          //verificar se a feed nova e a anterior são diferentes
          it("Test Change Feeds", function(){
             expect(oldFeed).not.toBe($(".feed").html());
          });
