@@ -27,21 +27,18 @@ $(function() {
         });
 
 
-        /* TODO: Write a test that loops through each feed
-         * in the allFeeds object and ensures it has a URL defined
-         * and that the URL is not empty.
+        /* Verificar se as urls dadas estejam bem formatadas
          */
          it("url well defined", function() {
             allFeeds.forEach(function(value){
                 //https://stackoverflow.com/questions/8667070/javascript-regular-expression-to-validate-url
                 var expReg =  /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/;
+               //para fazer o teste é usado o objeto javascript para expressões regulares: expReg
                 expect(expReg.test(value.url)).toBe(true);
             });
          });
 
-        /* TODO: Write a test that loops through each feed
-         * in the allFeeds object and ensures it has a name defined
-         * and that the name is not empty.
+        /* Verificar se o nome de cada feed é definido e não esteje vazio;
          */
 
          it("name defined", function(){
@@ -54,12 +51,9 @@ $(function() {
 
 
 
-    /* TODO: Write a new test suite named "The menu" */
+    /* Teste para as funcionalidades do menu*/
     describe("The menu", function(){
-        /* TODO: Write a test that ensures the menu element is
-         * hidden by default. You'll have to analyze the HTML and
-         * the CSS to determine how we're performing the
-         * hiding/showing of the menu element.
+        /* Verificar  se o menu mantém se escondido ao carregar a página
          */
          var menu = $("body");
          it("initial visibility", function(){
@@ -67,10 +61,7 @@ $(function() {
             expect(menu.hasClass("menu-hidden")).toBe(true);
          });
 
-         /* TODO: Write a test that ensures the menu changes
-          * visibility when the menu icon is clicked. This test
-          * should have two expectations: does the menu display when
-          * clicked and does it hide when clicked again.
+         /* Veerificar se o menu troca sua exibição ao clicar no icone do mesmo.
           */
           it("Change visibility", function(){
            $(".menu-icon-link").trigger("click");
@@ -81,34 +72,31 @@ $(function() {
 
     });
 
-  /* TODO: Write a new test suite named "Initial Entries" */
+  /*Teste para verificar o correto carregamento de novos feeds*/
     describe("Initial Entries", function(){
-        /* TODO: Write a test that ensures when the loadFeed
-         * function is called and completes its work, there is at least
-         * a single .entry element within the .feed container.
-         * Remember, loadFeed() is asynchronous so this test will require
-         * the use of Jasmine's beforeEach and asynchronous done() function.
+        /* Uso do beforeEach para executar a função assincrona loadFeed
          */
          beforeEach(function(done){
             loadFeed(0,done);
          });
+         /*Verificar se foi adicionado o feed rss, depois de executada loadFeed() */
          it("async complete work", function(){
-            expect($(".feed").length).not.toBe(0);
-            expect($(".entry").length).not.toBe(0);
+            expect($(".feed .entry").length).not.toBe(0);
          });
     });   
 
     
-
-    /* TODO: Write a new test suite named "New Feed Selection" */
+    /* Teste para verificar o carregamento de novas Feeds*/
 
     describe("New Feed Selection", function(){
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
+        /* Verificar se depois de carregada a nova feed, o conteúdo realmente tenha mudado.
          */
-
+         //guarda a feed anterior
          var oldFeed;
+         /*executa a função loadFeed, passando a ela uma nova função anônima
+           para executar novamente loadFeed, esta para carregar uma feed diferente
+           da primeira 
+         */
           beforeEach(function(done){
             loadFeed(0,function(){
                 oldFeed = $(".feed").html();
